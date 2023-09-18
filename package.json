@@ -13,6 +13,9 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.5.7",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "eslint": "^8.49.0",
     "forgescript": "^1.0.6",
     "typedoc": "^0.25.0",
     "typescript": "^5.2.2"
