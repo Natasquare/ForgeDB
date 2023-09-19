@@ -1,20 +1,33 @@
 import { ForgeClient, ForgeExtension } from "forgescript";
-import { QuickDB } from "quick.db";
-export type QuickDBTable = QuickDB<IQuickDBData>;
+import { QuickDB, SqliteDriver, MongoDriver } from "quick.db";
+export declare type QuickDBTable = QuickDB<IQuickDBData>;
 export interface IQuickDBData {
     identifier: string;
     id: string;
     type: string;
     value: string;
 }
+export declare enum DriverType {
+    Sqlite = "sqlite",
+    Mongo = "mongo"
+}
+export declare type ForgeDBOptions = {
+    type: DriverType.Sqlite;
+    path: string;
+} | {
+    type: DriverType.Mongo;
+    mongoURL: string;
+};
 export declare class ForgeDB extends ForgeExtension {
-    readonly path: string;
+    readonly options: ForgeDBOptions;
     static db: QuickDBTable;
+    static driver: SqliteDriver | MongoDriver;
     name: string;
     description: string;
     version: string;
-    constructor(path?: string);
+    constructor(options?: ForgeDBOptions);
     init(client: ForgeClient): void;
+    static setDriver(client: ForgeClient, options: ForgeDBOptions): Promise<void>;
     static makeIdentifier(type: string, id: string): string;
     static get(type: string, id: string): Promise<IQuickDBData | null>;
     static set(type: string, id: string, value: string): Promise<{
